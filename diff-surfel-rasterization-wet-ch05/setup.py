@@ -3,7 +3,10 @@
 # GRAPHDECO research group, https://team.inria.fr/graphdeco
 # All rights reserved.
 #
-# This software is free for non-commercial, research and evaluation use 
+# Copyright (c) 2026 Advanced Micro Devices, Inc.
+# ROCm/HIP build support author: Jeff Daily <jeff.daily@amd.com>
+#
+# This software is free for non-commercial, research and evaluation use
 # under the terms of the LICENSE.md file.
 #
 # For inquiries contact  george.drettakis@inria.fr
@@ -57,8 +60,8 @@ _patch_hipify_ignore_glm()
 # c10::ValueError(SourceLocation, string) from the Clang-built c10.dll (the
 # inherited ctor is absent from the MSVC import lib). Fix: copy ext.cpp to
 # ext_winhip.cu so torch's BuildExtension routes it through hipcc/amdclang++,
-# which shares the same ABI as c10.dll. The shim is byte-identical; guarded so
-# Linux and CUDA-Windows builds are unaffected.
+# which shares the same ABI as c10.dll. The copy has identical contents; it is
+# guarded so Linux and CUDA-Windows builds are unaffected.
 _ext_sources = [
     "cuda_rasterizer/rasterizer_impl.cu",
     "cuda_rasterizer/forward.cu",
