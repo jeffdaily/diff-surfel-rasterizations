@@ -34,8 +34,6 @@ def _patch_hipify_ignore_glm():
     hipify's ``ignores`` and drop it from ``header_include_dirs``. The source
     keeps including <glm/...> via -I, resolved against the pristine bundled tree.
     """
-    import torch
-
     if not torch.version.hip:
         return
     from torch.utils.hipify import hipify_python

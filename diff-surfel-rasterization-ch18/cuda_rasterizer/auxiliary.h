@@ -15,6 +15,12 @@
 #include "config.h"
 #include "stdio.h"
 
+#if defined(USE_ROCM)
+// HIP's device runtime does not declare CUDA's __trap(); __builtin_trap is the
+// equivalent device abort (HIP's own abort() is defined as __builtin_trap).
+#define __trap __builtin_trap
+#endif
+
 #define BLOCK_SIZE (BLOCK_X * BLOCK_Y)
 #define NUM_WARPS (BLOCK_SIZE/32)
 

@@ -12,7 +12,9 @@
 #include "backward.h"
 #include "auxiliary.h"
 #include <cooperative_groups.h>
+#if !defined(USE_ROCM)
 #include <cooperative_groups/reduce.h>
+#endif
 namespace cg = cooperative_groups;
 
 // Backward pass for conversion of spherical harmonics to RGB for
@@ -682,7 +684,7 @@ void BACKWARD::preprocess(
 	glm::vec2* dL_dscales,
 	glm::vec4* dL_drots)
 {	
-	preprocessCUDA<NUM_CHANNELS><< <(P + 255) / 256, 256 >> > (
+	preprocessCUDA<NUM_CHANNELS><<<(P + 255) / 256, 256 >>> (
 		P, D, M,
 		(float3*)means3D,
 		transMats,
@@ -736,7 +738,7 @@ void BACKWARD::render(
 	float* dL_dopacity,
 	float* dL_dcolors)
 {
-	renderCUDA<NUM_CHANNELS> << <grid, block >> >(
+	renderCUDA<NUM_CHANNELS> <<<grid, block >>>(
 		ranges,
 		point_list,
 		W, H,
