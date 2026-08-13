@@ -17,3 +17,6 @@ The bundled GLM headers under `third_party/glm` are a submodule, so clone with
 building. Without them the compiler falls back to whatever GLM is installed
 system-wide, which is unlikely to recognise HIP as a device compiler and fails
 with GLM functions reported as host-only.
+
+`tests/` renders one scene through every variant and cross-checks them; see
+`tests/README.md`.
